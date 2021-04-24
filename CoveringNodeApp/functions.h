@@ -1,4 +1,6 @@
-#include <QCoreApplication>
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include <QFile>
 #include <QTextStream>
 #include <QtXml/QDomDocument>
@@ -42,12 +44,5 @@ QStringList findMissingElements(QStringList originalList, QStringList anotherLis
 */
 bool wtiteToTextFile(QString txtFilePath, QStringList listStrings);
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication a(argc, argv);
-    QTextStream cout(stdout);
 
-    cout << "Hello world" << Qt::endl;
-
-    return 0;
-}
+#endif // FUNCTIONS_H
