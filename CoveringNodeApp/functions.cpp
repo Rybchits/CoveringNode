@@ -30,3 +30,33 @@ QDomDocument readFromXmlFile(QString xmlFilePath){
     // Вернуть документ с древовидной структурой
     return domDoc;
 }
+
+
+QStringList readFromTextFile(QString txtFilePath){
+
+    QStringList listLinesFile;      // Список строк файла
+    QFile file(txtFilePath);        // Файл
+
+    // Если файл удалось открыть
+    if (file.open(QIODevice::ReadOnly))
+    {
+       QTextStream in(&file);       // Текстовый поток
+
+       // Пока не конец файла
+       while (!in.atEnd())
+           // Добавить строку в список
+           listLinesFile << in.readLine();
+
+       // Закрыть файл
+       file.close();
+    }
+    // Если файл не был открыт
+    else {
+        // Вызвать исключение
+        throw CustomException("Failed to read .txt file");
+    }
+
+    // Вернуть список строк
+    return listLinesFile;
+}
+
