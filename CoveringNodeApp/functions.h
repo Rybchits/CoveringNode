@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QtXml/QDomDocument>
+#include "CustomException.h"
 
 /*  Считать данные из файла формата txt
   * QString txtFilePath - путь к исходному файлу формата .txt
