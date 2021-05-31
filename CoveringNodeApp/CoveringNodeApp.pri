@@ -21,9 +21,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     $$PWD/CustomException.h \
+    $$PWD/TreeNode.h \
     $$PWD/functions.h
 
 SOURCES += \
+    $$PWD/TreeNode.cpp \
     $$PWD/functions.cpp
 
 INCLUDEPATH = \
