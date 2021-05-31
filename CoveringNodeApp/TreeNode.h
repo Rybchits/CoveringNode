@@ -10,6 +10,7 @@ class TreeNode
         uint numberNodesFromSet = 0;                             // Число узлов поддерева, которые принадлежат множеству
         QList<TreeNode*> children;                               // Список дочерних узлов
 
+
         // Посчитать число узлов поддерева, которые принадлежат множеству
         uint countNodesFromSet(const QStringList& idsNodesFromSet);
 

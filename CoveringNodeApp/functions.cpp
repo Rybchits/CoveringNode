@@ -1,6 +1,7 @@
 #include "functions.h"
 
-QDomDocument readFromXmlFile(QString xmlFilePath){
+QDomDocument readFromXmlFile(QString xmlFilePath)
+{
 
     QDomDocument domDoc;
 
@@ -32,7 +33,8 @@ QDomDocument readFromXmlFile(QString xmlFilePath){
 }
 
 
-QStringList readFromTextFile(QString txtFilePath){
+QStringList readFromTextFile(QString txtFilePath)
+{
 
     QStringList listLinesFile;      // Список строк файла
     QFile file(txtFilePath);        // Файл
