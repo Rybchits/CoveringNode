@@ -21,6 +21,9 @@ class TreeNode
          // Конструктор узла по документу с древовидной структурой
          TreeNode(QDomNode xmlNodeElement);
 
+         // Конструктор для тестирования
+         TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFromSet=0);
+
          // Найти узел по его id
          TreeNode* findNodeById(QString id);
 
@@ -35,6 +38,9 @@ class TreeNode
 
          // Получить указатели на дочерние узлы
          const QList<TreeNode*> getChildren();
+
+         // Сравнение деревьев от корневого узла
+         bool operator == (const TreeNode& right) const;
 };
 
 #endif // TREENODE_H

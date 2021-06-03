@@ -10,6 +10,11 @@ TreeNode::TreeNode(QDomNode xmlNodeElement)
 
 }
 
+TreeNode::TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFromSet){
+    this->idNode = IdNode;
+    this->children = Children;
+    this->numberNodesFromSet = NumberNodesFromSet;
+}
 
 /* Посчитать число узлов поддерева, которые принадлежат множеству
  * QStringList& idsNodesFromSet - список id узлов множества
@@ -57,3 +62,39 @@ const QList<TreeNode*> TreeNode::getChildren()
 {
     return this->children;
 }
+
+bool TreeNode::operator==(const TreeNode &right) const
+{
+    // Счиать что деревья идентичны
+    bool isEqual = true;
+
+    // Если не равны id корневых элементов или число дочерних узлов первого уровня считать что деревья не идентичны
+    isEqual &= this->idNode == right.idNode &&
+            this->children.length() == right.children.length() && this->numberNodesFromSet == right.numberNodesFromSet;
+
+    // Для каждого дочернего узла первого уровня левого операнда
+    for (int i = 0; i < this->children.length() && isEqual; i++)
+    {
+        // ...Считать что элемент с таким Id не был найден
+        bool elementWasFound = false;
+
+        // Для каждого дочернего узла первого уровня правого операнда, пока элемент с таким id не найден
+        for (int j = 0; j < right.children.length() && !elementWasFound; j++)
+        {
+            // Если id дочерних элементов совпадают
+            if (this->children[i]->idNode == right.children[j]->idNode)
+            {
+                // Сравнить поддеревья
+                isEqual &= (*(right.children[j]) == *(this->children[i]));
+                // Счиатать что элемент был найден
+                elementWasFound = true;
+            }
+        }
+        // Если элемент с таким id не был найден среди дочерних, считать что деревья не идентичны
+        isEqual = elementWasFound? isEqual : false;
+    }
+
+    // Вернуть результат
+    return isEqual;
+}
+
