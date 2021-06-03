@@ -10,6 +10,7 @@ TreeNode::TreeNode(QDomNode xmlNodeElement)
 
 }
 
+
 /* Посчитать число узлов поддерева, которые принадлежат множеству
  * QStringList& idsNodesFromSet - список id узлов множества
  * return число узлов поддерева

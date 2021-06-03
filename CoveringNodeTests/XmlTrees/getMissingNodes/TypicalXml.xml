@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tree id="RootNodeId">
+  <Node1 id="Node1Id_1">
+    <Node2 id="Node2Id_1"/>
+    <Node2 id="Node2Id_2">
+      <Node3 id="Node3Id_1"/>
+      <Node3 id="Node3Id_2"/>
+    </Node2>
+    <Node2 id="Node2Id_3"/>
+  </Node1>
+  <Node1 id="Node1Id_2">
+    <Node2 id="Node2Id_4">
+      <Node3 id="Node3Id_3"/>
+    </Node2>    
+  </Node1>
+</Tree>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tree id="RootNodeId" name="RootNodeId">
+  <!--Комментарии-->
+  <Node1 id="1">
+  </Node1>
+  <!--Еще комментарии-->
+  <Node1 id="2">
+    <!--Много комментариев-->
+  </Node1>
+</Tree>
+

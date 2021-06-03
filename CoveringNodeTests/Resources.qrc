@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/Resources">
+        <file>XmlTrees/convertDomDocumentToTreeNode/CompleteBinaryTree.xml</file>
+        <file>XmlTrees/countNodesFromSet/TypicalXml.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/ComplexTest.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/ErrorNoCloseTag.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/ErrorNoRoot.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/ExceptionNoIds.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/HasComments.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/HasNames.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/IncompleteBinaryTree.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/OnlyRootNode.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/SomeTagsNoID.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/TwoNodeLevels.xml</file>
+        <file>XmlTrees/convertDomDocumentToTreeNode/UnbalancedTree.xml</file>
+        <file>XmlTrees/findNodeById/NodeHasLatin.xml</file>
+        <file>XmlTrees/findNodeById/NodeHasNumbers.xml</file>
+        <file>XmlTrees/findNodeById/NodeHasSpecialSymbol.xml</file>
+        <file>XmlTrees/findNodeById/NodesHaveSubstring.xml</file>
+        <file>XmlTrees/findNodeById/TypicalXml.xml</file>
+        <file>XmlTrees/getMissingNodes/TypicalXml.xml</file>
+        <file>XmlTrees/getMissingNodes/UnbalancedTree.xml</file>
+    </qresource>
+</RCC>

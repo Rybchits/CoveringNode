@@ -8,3 +8,6 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES +=  tst_apptest.cpp
+
+RESOURCES += \
+    Resources.qrc

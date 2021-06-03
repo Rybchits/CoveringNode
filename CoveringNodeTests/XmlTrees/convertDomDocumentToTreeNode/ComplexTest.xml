@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Это сложный тест-->
+<Tree id="RootNodeId" name="RootNodeId">
+  <!--Комментарии-->
+  <Node1 id="Node1Id_1">
+    <Node2 id="Node2Id_1"/>
+    <Node2 id="Node2Id_2"/>
+    <Node2 id="Node2Id_3"/>
+  </Node1>
+  <!--Еще комментарии-->
+  <Node1 id="Node1Id_2">
+    <!--Много комментариев-->
+    <Node2 id="Node2Id_4" name="Name24"/> 
+    <Node2 id="Node2Id_5" name="Name25"/>
+    <Node2 id="Node2Id_6"/>
+  </Node1>
+</Tree>
+

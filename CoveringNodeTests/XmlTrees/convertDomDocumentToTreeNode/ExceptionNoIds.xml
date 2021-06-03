@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tree>
+  <Node1>
+    <Node2/>
+    <Node2/>
+    <Node2/>
+  </Node1>
+  <Node1 >
+    <Node2 /> 
+    <Node2 />
+    <Node2 />
+  </Node1>
+</Tree>
+
