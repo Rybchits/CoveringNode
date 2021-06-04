@@ -30,7 +30,7 @@ class TreeNode
          uint countNodesFromSet(const QStringList& idsNodesFromSet);
 
          // Получить список id недостающих узлов
-         void getMissingNodes(const QStringList& idsNodesFromSet, QStringList& MissingNodes);
+         QStringList getMissingNodes(const QStringList& idsNodesFromSet);
 
          // Получить id узла
          const QString getIdNode();

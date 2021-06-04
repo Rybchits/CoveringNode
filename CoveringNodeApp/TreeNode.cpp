@@ -47,9 +47,9 @@ bool TreeNode::checkCoverage(const QStringList& idsNodesFromSet)
  * QStringList& idsNodesFromSet - id узлов множества
  * QStringList& MissingNodes - ссылка на список недостающих узлов
 */
-void TreeNode::getMissingNodes(const QStringList& idsNodesFromSet, QStringList& MissingNodes)
+QStringList TreeNode::getMissingNodes(const QStringList& idsNodesFromSet)
 {
-
+    return QStringList();
 }
 
 

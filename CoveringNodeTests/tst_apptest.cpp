@@ -46,6 +46,14 @@ private slots:
     void test_SetIsEmprty();
     void test_ParentNodesInSet();
     void test_ComplexTest2();
+
+    // getMissingNodes
+    void test_ChildNodesFirstLevelInSet2();
+    void test_NoChildNodes();
+    void test_UnbalancedTree2();
+    void test_MissingNodesInDifferentLevels();
+    void test_MissingNodeIsLeaf();
+    void test_AnalizedNodeInSet2();
 };
 
 AppTest::AppTest()
@@ -787,6 +795,145 @@ void AppTest::test_ComplexTest2()
     }
 }
 
+// getMissingNodes
+
+void AppTest::test_ChildNodesFirstLevelInSet2()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/getMissingNodes/TypicalXml.xml");
+        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
+
+        QString idAnalizedNode = "Node1Id_1";
+        QStringList set = {"Node2Id_1", "Node2Id_2", "Node2Id_3"};
+        QSet<QString> expectedMissingNodes = {};
+
+        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
+        QStringList MissingNodes = searchNode->getMissingNodes(set);
+
+        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_NoChildNodes()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/getMissingNodes/TypicalXml.xml");
+        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
+
+        QString idAnalizedNode = "Node3Id_2";
+        QStringList set = {"Node3Id_2"};
+        QSet<QString> expectedMissingNodes = {};
+
+        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
+        QStringList MissingNodes = searchNode->getMissingNodes(set);
+
+        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_UnbalancedTree2()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/getMissingNodes/UnbalancedTree.xml");
+        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
+
+        QString idAnalizedNode = "RootNodeId";
+        QStringList set = {};
+        QSet<QString> expectedMissingNodes = {"1"};
+
+        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
+        QStringList MissingNodes = searchNode->getMissingNodes(set);
+
+        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_MissingNodesInDifferentLevels()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/getMissingNodes/TypicalXml.xml");
+        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
+
+        QString idAnalizedNode = "RootNodeId";
+        QStringList set = {"Node2Id_1", "Node2Id_3"};
+        QSet<QString> expectedMissingNodes = {"Node2Id_2", "Node1Id_2"};
+
+        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
+        QStringList MissingNodes = searchNode->getMissingNodes(set);
+
+        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_MissingNodeIsLeaf()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/getMissingNodes/TypicalXml.xml");
+        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
+
+        QString idAnalizedNode = "Node1Id_1";
+        QStringList set = {"Node2Id_1", "Node3Id_2", "Node2Id_3"};
+        QSet<QString> expectedMissingNodes = {"Node3Id_1"};
+
+        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
+        QStringList MissingNodes = searchNode->getMissingNodes(set);
+
+        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_AnalizedNodeInSet2()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/getMissingNodes/TypicalXml.xml");
+        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
+
+        QString idAnalizedNode = "RootNodeId";
+        QStringList set = {"Node2Id_1", "Node2Id_3", "RootNodeId"};
+        QSet<QString> expectedMissingNodes = {};
+
+        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
+        QStringList MissingNodes = searchNode->getMissingNodes(set);
+
+        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
 
 #include "tst_apptest.moc"
 
