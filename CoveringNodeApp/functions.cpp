@@ -65,5 +65,48 @@ QStringList readFromTextFile(QString txtFilePath)
 
 TreeNode convertDomDocumentToTreeNode(QDomDocument xmlDoc)
 {
-    return TreeNode("Root", QList<TreeNode*>());
+    TreeNode rootNode;
+
+    // Получить первый узел документа, являющийся ElementNode
+    QDomNode firstElementNode = getFirstElementNode(xmlDoc);
+
+    // Если первый узел документа, являющийся ElementNode найден
+    if (!firstElementNode.isNull()){
+
+        // Преобразуем текущий узел в класс элемента
+        QDomElement element = firstElementNode.toElement();
+
+        // Если есть атрибут типа id
+        if (element.hasAttribute("id"))
+            // Запустить конструктор объекта TreeNode из узла древовидной структуры
+            rootNode = TreeNode(firstElementNode);
+
+        // Иначе
+        else
+            // Вызвать исключение
+            throw CustomException("Root Node hasn't Id");
+    }
+
+    // Вернуть корневой узел
+    return rootNode;
 }
+
+
+QDomNode getFirstElementNode(QDomDocument xmlDoc)
+{
+    QDomNode firstNodeElement;
+
+    // Получить все дочерние узлы DocumentNode
+    QDomNodeList childsCurrentNode = xmlDoc.childNodes();
+
+    // Для каждого дочернего узла DocumentNode
+    for (int i = 0; i < childsCurrentNode.length(); i++){
+
+        // Если тип текущего узла является ElementNode, вернуть его
+        if (childsCurrentNode.item(i).nodeType() == QDomNode::ElementNode)
+            return childsCurrentNode.item(i);
+    }
+
+    return firstNodeElement;
+}
+
