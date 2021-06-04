@@ -351,7 +351,7 @@ void AppTest::test_NoSearchNode()
         // Поиск узла
         TreeNode* resultFunction = tree.findNodeById(idSearchNode);
 
-        QVERIFY2(resultFunction->getIdNode() == nullptr, "Узла с таким id нет");
+        QVERIFY2(resultFunction == nullptr, "Узла с таким id нет");
     }
     catch (CustomException e)
     {
@@ -414,7 +414,7 @@ void AppTest::test_SearchNodeIdIsEmpty()
         // Поиск узла
         TreeNode* resultFunction = tree.findNodeById(idSearchNode);
 
-        QVERIFY2(resultFunction->getIdNode() == nullptr, "Узла с таким Id нет");
+        QVERIFY2(resultFunction == nullptr, "Узла с таким Id нет");
     }
     catch (CustomException e)
     {

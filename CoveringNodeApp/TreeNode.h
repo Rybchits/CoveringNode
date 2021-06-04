@@ -3,6 +3,7 @@
 #include <QDomDocument>
 #include <QList>
 #include "CustomException.h"
+#include <QQueue>
 
 class TreeNode
 {

@@ -45,7 +45,8 @@ TreeNode::TreeNode(QDomNode xmlNodeElement)
     }
 }
 
-TreeNode::TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFromSet){
+TreeNode::TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFromSet)
+{
     this->idNode = IdNode;
     this->children = Children;
     this->numberNodesFromSet = NumberNodesFromSet;
@@ -64,9 +65,34 @@ uint TreeNode::countNodesFromSet(const QStringList& idsNodesFromSet)
  * QString id - id узла
  * return указатель на искомый узел
 */
-TreeNode* TreeNode::findNodeById(QString id)
+TreeNode* TreeNode::findNodeById(QString searchId)
 {
-    return this;
+    // Обход дерева в ширину с поиском узла с искомым id...
+
+    QQueue<TreeNode*> queueNodes;      // Узлы, которые осталось обойти
+    queueNodes.enqueue(this);       // Поместить в очередь текущий узел
+
+    // Пока есть не рассмотренные узлы...
+    while (!queueNodes.isEmpty()) {
+
+        // Взять первый элемент из очереди
+        TreeNode* currentNode = queueNodes.dequeue();
+
+        // Если текущий элемент имеет id искомого узла
+        if (currentNode->idNode == searchId)
+            // Считать текущий элемент искомым и вернуть его
+            return currentNode;
+
+        // Иначе
+        else
+        {
+            // Добавить в очередь все дочерние узлы текущего узла
+            queueNodes.append(currentNode->children);
+        }
+    }
+
+    // Если узел не был найден, вернуть пустой указатель
+    return nullptr;
 }
 
 /* Проверить покрывает ли заданное множество узлов данный узел
