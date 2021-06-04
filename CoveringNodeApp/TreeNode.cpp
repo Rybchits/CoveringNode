@@ -7,7 +7,42 @@ TreeNode::TreeNode()
 
 TreeNode::TreeNode(QDomNode xmlNodeElement)
 {
+    // Преобразуем текущий узел в класс элемента
+    QDomElement element = xmlNodeElement.toElement();
 
+    // Если не удалось преобразовать узел в элемент
+    if (element.isNull())
+    {
+        // Вызвать исключение
+        throw CustomException("The specified node is not ElementNode");
+    }
+
+    // Если у элемента отсутсвует аттрибут id
+    if (!element.hasAttribute("id"))
+    {
+        // Вызвать исключение
+        throw CustomException("The specified node hasn't attribute id");
+    }
+
+    // Указать ID текущего узла
+    this->idNode = element.attribute("id");
+
+    // Получить список дочерних узлов текущего
+    QDomNodeList childsCurrentNode = xmlNodeElement.childNodes();
+
+    // Для каждого дочернего узла текущего
+    for (int i = 0; i < childsCurrentNode.count(); i++){
+
+        // Если дочерний узел является ElementNode
+        if (childsCurrentNode.item(i).nodeType() == QDomNode::ElementNode){
+
+            // Если дочерний узел имеет аттрибут id
+            if (childsCurrentNode.item(i).toElement().hasAttribute("id"))
+
+                // Добавить узел в список дочерних узлов
+                this->children.append(new TreeNode(childsCurrentNode.item(i)));
+        }
+    }
 }
 
 TreeNode::TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFromSet){

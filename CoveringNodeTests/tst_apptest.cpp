@@ -326,7 +326,7 @@ void AppTest::test_UnbalancedTree()
         TreeNode childNode3("3", QList<TreeNode*>() = {&childNode4});
         TreeNode childNode2("2", QList<TreeNode*>() = {&childNode3});
         TreeNode childNode1("1", QList<TreeNode*>() = {&childNode2});
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1});
+        TreeNode rootNode("0", QList<TreeNode*>() = {&childNode1});
 
         QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }

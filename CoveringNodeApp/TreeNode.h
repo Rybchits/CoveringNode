@@ -2,6 +2,7 @@
 #define TREENODE_H
 #include <QDomDocument>
 #include <QList>
+#include "CustomException.h"
 
 class TreeNode
 {
