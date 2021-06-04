@@ -62,3 +62,8 @@ QStringList readFromTextFile(QString txtFilePath)
     return listLinesFile;
 }
 
+
+TreeNode convertDomDocumentToTreeNode(QDomDocument xmlDoc)
+{
+    return TreeNode("Root", QList<TreeNode*>());
+}
