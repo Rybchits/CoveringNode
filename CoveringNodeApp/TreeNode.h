@@ -10,10 +10,6 @@ class TreeNode
         uint numberNodesFromSet = 0;                             // Число узлов поддерева, которые принадлежат множеству
         QList<TreeNode*> children;                               // Список дочерних узлов
 
-
-        // Посчитать число узлов поддерева, которые принадлежат множеству
-        uint countNodesFromSet(const QStringList& idsNodesFromSet);
-
      public:
          // Конструктор по умолчанию
          TreeNode();
@@ -29,6 +25,9 @@ class TreeNode
 
          // Проверить покрывает ли заданное множество текущий узел
          bool checkCoverage(const QStringList& idsNodesFromSet);
+
+         // Посчитать число узлов поддерева, которые принадлежат множеству
+         uint countNodesFromSet(const QStringList& idsNodesFromSet);
 
          // Получить список id недостающих узлов
          void getMissingNodes(const QStringList& idsNodesFromSet, QStringList& MissingNodes);
