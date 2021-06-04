@@ -26,6 +26,17 @@ private slots:
     void test_OnlyRootNode();
     void test_SomeTagsNoID();
     void test_UnbalancedTree();
+
+    // findNodeById
+    void test_NoSearchNode();
+    void test_SearchNodeIsLeaf();
+    void test_SearchNodeInSecondLevel();
+    void test_SearchNodeIdIsEmpty();
+    void test_IdNodeHasNumbers();
+    void test_IdNodeHasLatin();
+    void test_IdNodeHasSpecialSymbol();
+    void test_SearchNodeIsRoot();
+    void test_NodesHaveSubstringId();
 };
 
 AppTest::AppTest()
@@ -37,6 +48,8 @@ AppTest::~AppTest()
 {
 
 }
+
+// convertDomDocumentToTreeNode
 
 void AppTest::test_CompleteBinaryTree()
 {
@@ -59,7 +72,7 @@ void AppTest::test_CompleteBinaryTree()
         // Корень
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -90,7 +103,7 @@ void AppTest::test_ComplexTest()
         // Корень
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -159,7 +172,7 @@ void AppTest::test_HasComments()
         TreeNode childNode2("2", QList<TreeNode*>());
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1, &childNode2});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -180,7 +193,7 @@ void AppTest::test_TwoNodeLevels()
         TreeNode childNode2("Node1Id_2", QList<TreeNode*>());
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1, &childNode2});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -201,7 +214,7 @@ void AppTest::test_HasNames()
         TreeNode childNode2("Node1Id_2", QList<TreeNode*>());
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1, &childNode2});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -229,7 +242,7 @@ void AppTest::test_IncompleteBinaryTree()
         // Корень
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -248,7 +261,7 @@ void AppTest::test_OnlyRootNode()
         // Создание дерева
         TreeNode rootNode("Root", QList<TreeNode*>());
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -275,7 +288,7 @@ void AppTest::test_SomeTagsNoID()
         // Корень
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
     }
     catch (CustomException e)
     {
@@ -298,7 +311,198 @@ void AppTest::test_UnbalancedTree()
         TreeNode childNode1("1", QList<TreeNode*>() = {&childNode2});
         TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1});
 
-        QVERIFY2(resultFunction == rootNode, "Деревья идентичны");
+        QVERIFY2(resultFunction == rootNode, "Деревья не идентичны");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+// findNodeById
+
+void AppTest::test_NoSearchNode()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/TypicalXml.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "RootNodeId2";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == nullptr, "Узла с таким id нет");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_SearchNodeIsLeaf()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/TypicalXml.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "Node2Id_6";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == idSearchNode, "Найденный узел имеет другой ID");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_SearchNodeInSecondLevel()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/TypicalXml.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "Node1Id_1";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == idSearchNode, "Найденный узел имеет другой ID");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_SearchNodeIdIsEmpty()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/TypicalXml.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == nullptr, "Узла с таким Id нет");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_IdNodeHasNumbers()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/NodeHasNumbers.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "1234";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == idSearchNode, "Найденный узел имеет другой ID");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_IdNodeHasLatin()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/NodeHasLatin.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "SearchNode";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == idSearchNode, "Найденный узел имеет другой ID");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_IdNodeHasSpecialSymbol()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/NodeHasSpecialSymbol.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "#$%|*";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == idSearchNode, "Найденный узел имеет другой ID");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_SearchNodeIsRoot()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/convertDomDocumentToTreeNode/OnlyRootNode.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "Root";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == idSearchNode, "Найденный узел имеет другой ID");
+    }
+    catch (CustomException e)
+    {
+        QVERIFY2(false, e.what());
+    }
+}
+
+void AppTest::test_NodesHaveSubstringId()
+{
+    try
+    {
+        // Конвертация дерева
+        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/findNodeById/NodesHaveSubstring.xml");
+        TreeNode tree = convertDomDocumentToTreeNode(domXml);
+
+        QString idSearchNode = "Node";
+
+        // Поиск узла
+        TreeNode* resultFunction = tree.findNodeById(idSearchNode);
+
+        QVERIFY2(resultFunction->getIdNode() == idSearchNode, "Найденный узел имеет другой ID");
     }
     catch (CustomException e)
     {

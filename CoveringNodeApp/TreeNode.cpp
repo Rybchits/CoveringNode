@@ -31,7 +31,7 @@ uint TreeNode::countNodesFromSet(const QStringList& idsNodesFromSet)
 */
 TreeNode* TreeNode::findNodeById(QString id)
 {
-    return nullptr;
+    return this;
 }
 
 /* Проверить покрывает ли заданное множество узлов данный узел
