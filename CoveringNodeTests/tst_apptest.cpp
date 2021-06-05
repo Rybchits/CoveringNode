@@ -812,7 +812,7 @@ void AppTest::test_ChildNodesFirstLevelInSet2()
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
         QStringList MissingNodes = searchNode->getMissingNodes(set);
 
-        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+        QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
     catch (CustomException e)
     {
@@ -835,7 +835,7 @@ void AppTest::test_NoChildNodes()
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
         QStringList MissingNodes = searchNode->getMissingNodes(set);
 
-        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+        QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
     catch (CustomException e)
     {
@@ -858,7 +858,7 @@ void AppTest::test_UnbalancedTree2()
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
         QStringList MissingNodes = searchNode->getMissingNodes(set);
 
-        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+        QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
     catch (CustomException e)
     {
@@ -881,7 +881,7 @@ void AppTest::test_MissingNodesInDifferentLevels()
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
         QStringList MissingNodes = searchNode->getMissingNodes(set);
 
-        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+        QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
     catch (CustomException e)
     {
@@ -904,7 +904,7 @@ void AppTest::test_MissingNodeIsLeaf()
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
         QStringList MissingNodes = searchNode->getMissingNodes(set);
 
-        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+        QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
     catch (CustomException e)
     {
@@ -927,7 +927,7 @@ void AppTest::test_AnalizedNodeInSet2()
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
         QStringList MissingNodes = searchNode->getMissingNodes(set);
 
-        QVERIFY2(QSet<QString>(MissingNodes.begin(), MissingNodes.end()) == expectedMissingNodes, "Неверно выделены пропущенные узлы");
+        QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
     catch (CustomException e)
     {
