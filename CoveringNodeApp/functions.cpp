@@ -110,3 +110,24 @@ QDomNode getFirstElementNode(QDomDocument xmlDoc)
     return firstNodeElement;
 }
 
+
+bool wtiteToTextFile(QString txtFilePath, QStringList listStrings)
+{
+    QFile file(txtFilePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return false;
+
+    QTextStream out(&file);
+
+    if (listStrings.empty())
+        out << "The set covers the current node" << endl;
+    else
+        out << "The set don't covers the current node" << endl << "Missing Nodes: " << endl;
+
+    foreach(QString line, listStrings)
+    {
+         out << line << endl;
+    }
+
+    return true;
+}

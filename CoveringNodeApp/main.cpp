@@ -16,13 +16,13 @@ int main(int argc, char *argv[])
     try {
 
         // Если число аргументов соответствует ожидаемому
-        if (argc == 3)
+        if (argc == 4)
         {
             // Получаем дерево в виде xml файла
-            QDomDocument domXml = readFromXmlFile(QString(argv[0]));
+            QDomDocument domXml = readFromXmlFile(QString(argv[1]));
 
             // Получаем id родительского и дочерних узлов из текстового файла
-            QStringList listLines = readFromTextFile(QString(argv[1]));
+            QStringList listLines = readFromTextFile(QString(argv[2]));
 
 
             // Преобразовать полученный xml в дерево
@@ -42,10 +42,8 @@ int main(int argc, char *argv[])
             // Получить недостающие для покрытия узлы
             QStringList missingNodes = analizedNode->getMissingNodes(listLines.mid(1));
 
-            // Вывести недостающие узлы множества
-            foreach(QString misNode, missingNodes){
-                cout << misNode << endl;
-            }
+            // Вывести результат
+            wtiteToTextFile(argv[3], missingNodes);
         }
         // Иначе
         else
@@ -61,9 +59,7 @@ int main(int argc, char *argv[])
     }
 
     // Все пройдено Ок
-    cout << "OK" << endl;
-
-    return 0;
+    cout << endl << "Complete!" << endl;
 
 #endif
 
