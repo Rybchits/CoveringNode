@@ -120,7 +120,28 @@ bool TreeNode::checkCoverage(const QStringList& idsNodesFromSet)
 */
 QStringList TreeNode::getMissingNodes(const QStringList& idsNodesFromSet)
 {
-    return QStringList();
+    QStringList MissingNodes;
+
+    // Если узел не во множестве
+    if (!idsNodesFromSet.contains(this->idNode))
+    {
+        // Для каждого дочернего узла
+        foreach(TreeNode* child, this->children){
+
+            // Если для дочернего узла, число узлов из множества равно 0
+            if (child->numberNodesFromSet == 0)
+                // Добавить id текущий узел в список недостающих
+                MissingNodes.append(child->idNode);
+
+            // Если для дочернего узла, число узлов из множества больше 0 и текущий дочерний узел не во множестве
+            else if(child->numberNodesFromSet > 0)
+
+                // Найти недостающие для покрытия узлы
+                MissingNodes.append(child->getMissingNodes(idsNodesFromSet));
+        }
+    }
+
+    return MissingNodes;
 }
 
 
