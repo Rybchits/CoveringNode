@@ -777,15 +777,15 @@ void AppTest::test_ComplexTest2()
 
         // Второй уровень
         TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>(), 1);
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2});
+        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2}, 1);
         TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>(), 1);
 
         // Первый уровень
         TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2}, 3);
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3});
+        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3}, 1);
 
         // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
+        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2}, 4);
 
         QVERIFY2(testTree == rootNode, "Деревья не идентичны");
     }

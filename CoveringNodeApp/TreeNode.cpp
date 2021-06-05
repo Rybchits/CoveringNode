@@ -58,7 +58,17 @@ TreeNode::TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFr
 */
 uint TreeNode::countNodesFromSet(const QStringList& idsNodesFromSet)
 {
-    return 0;
+    // Считать число узлов, которые принадлежат множеству, равным 1, если текущий узел во множестве, иначе 0
+    this->numberNodesFromSet = idsNodesFromSet.contains(this->idNode)? 1 : 0;
+
+    // Посчитать число узлов из множества для каждого дочернего узла
+    foreach(TreeNode* child, this->children)
+    {
+        this->numberNodesFromSet += child->countNodesFromSet(idsNodesFromSet);
+    }
+
+    // Вернуть число узлов, которые принадлежат множеству
+    return this->numberNodesFromSet;
 }
 
 /* Найти узел по его id
