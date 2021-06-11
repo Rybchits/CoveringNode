@@ -111,7 +111,32 @@ TreeNode* TreeNode::findNodeById(QString searchId)
 */
 bool TreeNode::checkCoverage(const QStringList& idsNodesFromSet)
 {
+    // ...Считать что этот узел имеет статус - покрыт
+    bool isNodeCovered = true;
 
+    // Если id текущего узла не указан во множестве
+    if (!idsNodesFromSet.contains(this->idNode))
+    {
+        // Если у текущего узла нет дочерних
+        if (this->children.count() == 0)
+            // Считать что узел не покрыт
+            isNodeCovered = false;
+
+        // Иначе
+        else
+        {
+            // Если каждый из дочерних узлов является покрытым, считать текущий узел покрытым...
+            // Для каждого дочернего узла
+            foreach(TreeNode* child, this->children)
+            {
+                // Изменить статус покрытия узла относительно, статуса покрытия этого дочернего узла
+                isNodeCovered &= child->checkCoverage(idsNodesFromSet);
+            }
+        }
+    }
+
+    // Вернуть статус покрытия узла
+    return isNodeCovered;
 }
 
 /* Получить список id недостающих узлов для покрытия узла заданным множеством
