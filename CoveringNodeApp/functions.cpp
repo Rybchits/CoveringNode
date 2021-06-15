@@ -5,28 +5,33 @@ QDomDocument readFromXmlFile(QString xmlFilePath)
 
     QDomDocument domDoc;
 
-    // Открыть файл по указанному пути
-    QFile* file = new QFile(xmlFilePath);
-
-    // Если удалось открыть xml файл
-    if (file->open(QIODevice::ReadOnly))
+    if (xmlFilePath.endsWith(".xml"))
     {
-        // Если возникает ошибка синтаксического анализа
-        if (!domDoc.setContent(file)){
+        // Открыть файл по указанному пути
+        QFile* file = new QFile(xmlFilePath);
 
-            // Вызвать исключение с соответствующим сообщением
-            throw CustomException("Xml file contains syntax errors");
+        // Если удалось открыть xml файл
+        if (file->open(QIODevice::ReadOnly))
+        {
+            // Если возникает ошибка синтаксического анализа
+            if (!domDoc.setContent(file)){
+
+                // Вызвать исключение с соответствующим сообщением
+                throw CustomException("Xml file contains syntax errors");
+            }
+            // Закрыть файл
+            file->close();
         }
-        // Закрыть файл
-        file->close();
-    }
 
-    // Иначе, если не удалось открыть xml файл
-    else
-    {
-        // Вызвать исключение с соответствующим сообщением
-        throw CustomException("Failed to read .xml file");
+        // Иначе, если не удалось открыть xml файл
+        else
+        {
+            // Вызвать исключение с соответствующим сообщением
+            throw CustomException("Failed to read .xml file");
+        }
     }
+    else
+        throw CustomException("Xml file was not transferred");
 
     // Вернуть документ с древовидной структурой
     return domDoc;
@@ -37,26 +42,32 @@ QStringList readFromTextFile(QString txtFilePath)
 {
 
     QStringList listLinesFile;      // Список строк файла
-    QFile file(txtFilePath);        // Файл
 
-    // Если файл удалось открыть
-    if (file.open(QIODevice::ReadOnly))
+    if (txtFilePath.endsWith(".txt"))
     {
-       QTextStream in(&file);       // Текстовый поток
+        QFile file(txtFilePath);        // Файл
 
-       // Пока не конец файла
-       while (!in.atEnd())
-           // Добавить строку в список
-           listLinesFile << in.readLine();
+        // Если файл удалось открыть
+        if (file.open(QIODevice::ReadOnly))
+        {
+           QTextStream in(&file);       // Текстовый поток
 
-       // Закрыть файл
-       file.close();
+           // Пока не конец файла
+           while (!in.atEnd())
+               // Добавить строку в список
+               listLinesFile << in.readLine();
+
+           // Закрыть файл
+           file.close();
+        }
+        // Если файл не был открыт
+        else {
+            // Вызвать исключение
+            throw CustomException("Failed to read .txt file");
+        }
     }
-    // Если файл не был открыт
-    else {
-        // Вызвать исключение
-        throw CustomException("Failed to read .txt file");
-    }
+    else
+        throw CustomException("Txt file was not transferred");
 
     // Вернуть список строк
     return listLinesFile;
