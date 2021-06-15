@@ -52,30 +52,11 @@ TreeNode::TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFr
     this->numberNodesFromSet = NumberNodesFromSet;
 }
 
-/* Посчитать число узлов поддерева, которые принадлежат множеству
- * QStringList& idsNodesFromSet - список id узлов множества
- * return число узлов поддерева
-*/
-uint TreeNode::countNodesFromSet(const QStringList& idsNodesFromSet)
-{
-    // Считать число узлов, которые принадлежат множеству, равным 1, если текущий узел во множестве, иначе 0
-    this->numberNodesFromSet = idsNodesFromSet.contains(this->idNode)? 1 : 0;
-
-    // Посчитать число узлов из множества для каждого дочернего узла
-    foreach(TreeNode* child, this->children)
-    {
-        this->numberNodesFromSet += child->countNodesFromSet(idsNodesFromSet);
-    }
-
-    // Вернуть число узлов, которые принадлежат множеству
-    return this->numberNodesFromSet;
-}
-
 /* Найти узел по его id
  * QString id - id узла
  * return указатель на искомый узел
 */
-TreeNode* TreeNode::findNodeById(QString searchId)
+TreeNode* TreeNode::findNodeById(const QString searchId)
 {
     // Обход дерева в ширину с поиском узла с искомым id...
 
@@ -142,31 +123,45 @@ bool TreeNode::checkCoverage(const QStringList& idsNodesFromSet)
 /* Получить список id недостающих узлов для покрытия узла заданным множеством
  * QStringList& idsNodesFromSet - id узлов множества
  * QStringList& MissingNodes - ссылка на список недостающих узлов
+ * return
 */
-QStringList TreeNode::getMissingNodes(const QStringList& idsNodesFromSet)
+uint TreeNode::getMissingNodes(const QString analizedNodeId, const QStringList& idsNodesFromSet, QStringList& MissingNodes)
 {
-    QStringList MissingNodes;
+    // Считать число узлов, которые принадлежат множеству
+    uint numberNodesFromSet = 0;
 
-    // Если узел не во множестве
-    if (!idsNodesFromSet.contains(this->idNode))
+    // Если текущий узел во множестве
+    if (idsNodesFromSet.contains(this->idNode))
     {
-        // Для каждого дочернего узла
-        foreach(TreeNode* child, this->children){
+        numberNodesFromSet = 1;
+    }
 
-            // Если для дочернего узла, число узлов из множества равно 0
-            if (child->numberNodesFromSet == 0)
-                // Добавить id текущий узел в список недостающих
-                MissingNodes.append(child->idNode);
+    // Иначе
+    else
+    {
+        // Посчитать число узлов из множества для каждого дочернего узла
+        foreach(TreeNode* child, this->children)
+        {
+            numberNodesFromSet += child->getMissingNodes(analizedNodeId ,idsNodesFromSet, MissingNodes);
+        }
 
-            // Если для дочернего узла, число узлов из множества больше 0 и текущий дочерний узел не во множестве
-            else if(child->numberNodesFromSet > 0)
+        // Если число узлов, которые принадлежат множеству равно 0 и узел не является нализируемым
+        if (numberNodesFromSet == 0 && this->idNode != analizedNodeId)
+        {
+            // Удалить все id дочерних узлов из множества недостающих узлов
+            foreach(TreeNode* child, this->children)
+            {
+                MissingNodes.removeAll(child->idNode);
+            }
 
-                // Найти недостающие для покрытия узлы
-                MissingNodes.append(child->getMissingNodes(idsNodesFromSet));
+            // Добавить этот узел в список недостающих
+            MissingNodes.append(this->idNode);
+
         }
     }
 
-    return MissingNodes;
+    // Вернуть число узлов поддерева, которые принадлежат множеству
+    return numberNodesFromSet;
 }
 
 

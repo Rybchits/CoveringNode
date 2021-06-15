@@ -36,11 +36,9 @@ int main(int argc, char *argv[])
                 // Вызвать исключение
                 throw CustomException("Analized Node was not found");
 
-            // Подсчитать число узлов из множества для каждого поддерева
-            analizedNode->countNodesFromSet(listLines.mid(1));
-
             // Получить недостающие для покрытия узлы
-            QStringList missingNodes = analizedNode->getMissingNodes(listLines.mid(1));
+            QStringList missingNodes;
+            analizedNode->getMissingNodes(analizedNode->getIdNode(), listLines.mid(1), missingNodes);
 
             // Вывести результат
             wtiteToTextFile(argv[3], missingNodes);

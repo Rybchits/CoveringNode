@@ -23,16 +23,13 @@ class TreeNode
          TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFromSet=0);
 
          // Найти узел по его id
-         TreeNode* findNodeById(QString id);
+         TreeNode* findNodeById(const QString id);
 
          // Проверить покрывает ли заданное множество текущий узел
          bool checkCoverage(const QStringList& idsNodesFromSet);
 
-         // Посчитать число узлов поддерева, которые принадлежат множеству
-         uint countNodesFromSet(const QStringList& idsNodesFromSet);
-
          // Получить список id недостающих узлов
-         QStringList getMissingNodes(const QStringList& idsNodesFromSet);
+         uint getMissingNodes(const QString analizedNodeId,const QStringList& idsNodesFromSet, QStringList& MissingNodes);
 
          // Получить id узла
          const QString getIdNode();

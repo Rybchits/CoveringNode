@@ -63,7 +63,7 @@ QStringList readFromTextFile(QString txtFilePath)
 }
 
 
-TreeNode convertDomDocumentToTreeNode(QDomDocument xmlDoc)
+TreeNode convertDomDocumentToTreeNode(const QDomDocument xmlDoc)
 {
     TreeNode rootNode;
 
@@ -92,7 +92,7 @@ TreeNode convertDomDocumentToTreeNode(QDomDocument xmlDoc)
 }
 
 
-QDomNode getFirstElementNode(QDomDocument xmlDoc)
+QDomNode getFirstElementNode(const QDomDocument xmlDoc)
 {
     QDomNode firstNodeElement;
 

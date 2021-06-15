@@ -38,14 +38,6 @@ private slots:
     void test_SearchNodeIsRoot();
     void test_NodesHaveSubstringId();
 
-    // countNodesFromSet
-    void test_NoNodesFromSet();
-    void test_AnalizedNodeInSet();
-    void test_ChildNodesFirstLevelInSet();
-    void test_ChildNodesDifferentLevelsInSet();
-    void test_SetIsEmprty();
-    void test_ParentNodesInSet();
-    void test_ComplexTest2();
 
     // getMissingNodes
     void test_ChildNodesFirstLevelInSet2();
@@ -527,274 +519,6 @@ void AppTest::test_NodesHaveSubstringId()
     }
 }
 
-// countNodesFromSet
-
-void AppTest::test_NoNodesFromSet()
-{
-    try
-    {
-        // Конвертация дерева
-        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/countNodesFromSet/TypicalXml.xml");
-        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
-
-        QString idAnalizedNode = "Node1Id_1";
-        QStringList set = {"Node1Id_2"};
-
-        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-
-        // Третий уровень
-        TreeNode childNode3_1("Node3Id_1", QList<TreeNode*>());
-        TreeNode childNode3_2("Node3Id_2", QList<TreeNode*>());
-
-        // Второй уровень
-        TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>());
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2});
-        TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>());
-
-        // Первый уровень
-        TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2});
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3});
-
-        // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
-
-        QVERIFY2(testTree == rootNode, "Деревья не идентичны");
-    }
-    catch (CustomException e)
-    {
-        QVERIFY2(false, e.what());
-    }
-}
-
-void AppTest::test_AnalizedNodeInSet()
-{
-    try
-    {
-        // Конвертация дерева
-        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/countNodesFromSet/TypicalXml.xml");
-        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
-
-        QString idAnalizedNode = "Node1Id_1";
-        QStringList set = {"Node1Id_1"};
-
-        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-
-        // Третий уровень
-        TreeNode childNode3_1("Node3Id_1", QList<TreeNode*>());
-        TreeNode childNode3_2("Node3Id_2", QList<TreeNode*>());
-
-        // Второй уровень
-        TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>());
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2});
-        TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>());
-
-        // Первый уровень
-        TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2}, 1);
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3});
-
-        // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
-
-        QVERIFY2(testTree == rootNode, "Деревья не идентичны");
-    }
-    catch (CustomException e)
-    {
-        QVERIFY2(false, e.what());
-    }
-}
-
-void AppTest::test_ChildNodesFirstLevelInSet()
-{
-    try
-    {
-        // Конвертация дерева
-        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/countNodesFromSet/TypicalXml.xml");
-        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
-
-        QString idAnalizedNode = "Node1Id_1";
-        QStringList set = {"Node2Id_1", "Node2Id_2"};
-
-        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-
-        // Третий уровень
-        TreeNode childNode3_1("Node3Id_1", QList<TreeNode*>());
-        TreeNode childNode3_2("Node3Id_2", QList<TreeNode*>());
-
-        // Второй уровень
-        TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>(), 1);
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2}, 1);
-        TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>());
-
-        // Первый уровень
-        TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2}, 2);
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3});
-
-        // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
-
-        QVERIFY2(testTree == rootNode, "Деревья не идентичны");
-    }
-    catch (CustomException e)
-    {
-        QVERIFY2(false, e.what());
-    }
-}
-
-void AppTest::test_ChildNodesDifferentLevelsInSet()
-{
-    try
-    {
-        // Конвертация дерева
-        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/countNodesFromSet/TypicalXml.xml");
-        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
-
-        QString idAnalizedNode = "Node1Id_1";
-        QStringList set = {"Node2Id_1", "Node3Id_2"};
-
-        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-
-        // Третий уровень
-        TreeNode childNode3_1("Node3Id_1", QList<TreeNode*>());
-        TreeNode childNode3_2("Node3Id_2", QList<TreeNode*>(), 1);
-
-        // Второй уровень
-        TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>(), 1);
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2}, 1);
-        TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>());
-
-        // Первый уровень
-        TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2}, 2);
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3});
-
-        // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
-
-        QVERIFY2(testTree == rootNode, "Деревья не идентичны");
-    }
-    catch (CustomException e)
-    {
-        QVERIFY2(false, e.what());
-    }
-}
-
-void AppTest::test_SetIsEmprty()
-{
-    try
-    {
-        // Конвертация дерева
-        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/countNodesFromSet/TypicalXml.xml");
-        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
-
-        QString idAnalizedNode = "Node1Id_1";
-        QStringList set = {};
-
-        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-
-        // Третий уровень
-        TreeNode childNode3_1("Node3Id_1", QList<TreeNode*>());
-        TreeNode childNode3_2("Node3Id_2", QList<TreeNode*>());
-
-        // Второй уровень
-        TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>());
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2});
-        TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>());
-
-        // Первый уровень
-        TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2});
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3});
-
-        // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
-
-        QVERIFY2(testTree == rootNode, "Деревья не идентичны");
-    }
-    catch (CustomException e)
-    {
-        QVERIFY2(false, e.what());
-    }
-}
-
-void AppTest::test_ParentNodesInSet()
-{
-    try
-    {
-        // Конвертация дерева
-        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/countNodesFromSet/TypicalXml.xml");
-        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
-
-        QString idAnalizedNode = "Node1Id_1";
-        QStringList set = {"Node2Id_2", "RootNodeId"};
-
-        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-
-        // Третий уровень
-        TreeNode childNode3_1("Node3Id_1", QList<TreeNode*>());
-        TreeNode childNode3_2("Node3Id_2", QList<TreeNode*>());
-
-        // Второй уровень
-        TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>());
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2}, 1);
-        TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>());
-
-        // Первый уровень
-        TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2}, 1);
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3});
-
-        // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2});
-
-        QVERIFY2(testTree == rootNode, "Деревья не идентичны");
-    }
-    catch (CustomException e)
-    {
-        QVERIFY2(false, e.what());
-    }
-}
-
-void AppTest::test_ComplexTest2()
-{
-    try
-    {
-        // Конвертация дерева
-        QDomDocument domXml = readFromXmlFile(":/Resources/XmlTrees/countNodesFromSet/TypicalXml.xml");
-        TreeNode testTree = convertDomDocumentToTreeNode(domXml);
-
-        QString idAnalizedNode = "RootNodeId";
-        QStringList set = {"Node1Id_1", "Node2Id_3", "Node3Id_2", "Node2Id_1"};
-
-        TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-
-        // Третий уровень
-        TreeNode childNode3_1("Node3Id_1", QList<TreeNode*>());
-        TreeNode childNode3_2("Node3Id_2", QList<TreeNode*>(), 1);
-
-        // Второй уровень
-        TreeNode childNode2_1("Node2Id_1", QList<TreeNode*>(), 1);
-        TreeNode childNode2_2("Node2Id_2", QList<TreeNode*>() = {&childNode3_1, &childNode3_2}, 1);
-        TreeNode childNode2_3("Node2Id_3", QList<TreeNode*>(), 1);
-
-        // Первый уровень
-        TreeNode childNode1_1("Node1Id_1", QList<TreeNode*>() = {&childNode2_1, &childNode2_2}, 3);
-        TreeNode childNode1_2("Node1Id_2", QList<TreeNode*>() = {&childNode2_3}, 1);
-
-        // Корень
-        TreeNode rootNode("RootNodeId", QList<TreeNode*>() = {&childNode1_1, &childNode1_2}, 4);
-
-        QVERIFY2(testTree == rootNode, "Деревья не идентичны");
-    }
-    catch (CustomException e)
-    {
-        QVERIFY2(false, e.what());
-    }
-}
-
 // getMissingNodes
 
 void AppTest::test_ChildNodesFirstLevelInSet2()
@@ -810,8 +534,9 @@ void AppTest::test_ChildNodesFirstLevelInSet2()
         QSet<QString> expectedMissingNodes = {};
 
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-        QStringList MissingNodes = searchNode->getMissingNodes(set);
+
+        QStringList MissingNodes;
+        searchNode->getMissingNodes(searchNode->getIdNode(), set, MissingNodes);
 
         QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
@@ -834,8 +559,8 @@ void AppTest::test_NoChildNodes()
         QSet<QString> expectedMissingNodes = {};
 
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-        QStringList MissingNodes = searchNode->getMissingNodes(set);
+        QStringList MissingNodes;
+        searchNode->getMissingNodes(searchNode->getIdNode(), set, MissingNodes);
 
         QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
@@ -858,8 +583,8 @@ void AppTest::test_UnbalancedTree2()
         QSet<QString> expectedMissingNodes = {"1"};
 
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-        QStringList MissingNodes = searchNode->getMissingNodes(set);
+        QStringList MissingNodes;
+        searchNode->getMissingNodes(searchNode->getIdNode(), set, MissingNodes);
 
         QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
@@ -882,8 +607,8 @@ void AppTest::test_MissingNodesInDifferentLevels()
         QSet<QString> expectedMissingNodes = {"Node2Id_2", "Node1Id_2"};
 
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-        QStringList MissingNodes = searchNode->getMissingNodes(set);
+        QStringList MissingNodes;
+        searchNode->getMissingNodes(searchNode->getIdNode(), set, MissingNodes);
 
         QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
@@ -906,8 +631,8 @@ void AppTest::test_MissingNodeIsLeaf()
         QSet<QString> expectedMissingNodes = {"Node3Id_1"};
 
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-        QStringList MissingNodes = searchNode->getMissingNodes(set);
+        QStringList MissingNodes;
+        searchNode->getMissingNodes(searchNode->getIdNode(), set, MissingNodes);
 
         QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }
@@ -930,8 +655,8 @@ void AppTest::test_AnalizedNodeInSet2()
         QSet<QString> expectedMissingNodes = {};
 
         TreeNode* searchNode = testTree.findNodeById(idAnalizedNode);
-        searchNode->countNodesFromSet(set);
-        QStringList MissingNodes = searchNode->getMissingNodes(set);
+        QStringList MissingNodes;
+        searchNode->getMissingNodes(searchNode->getIdNode(), set, MissingNodes);
 
         QVERIFY2(MissingNodes.toSet() == expectedMissingNodes, "Неверно выделены пропущенные узлы");
     }

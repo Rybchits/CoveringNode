@@ -30,12 +30,12 @@ bool wtiteToTextFile(QString txtFilePath, QStringList listStrings);
  * QDomDocument xmlDoc - документ с древовидной структурой
  * return первый узел документа, являющийся ElementNode
 */
-QDomNode getFirstElementNode(QDomDocument xmlDoc);
+QDomNode getFirstElementNode(const QDomDocument xmlDoc);
 
 /* Конвертировать QDomDocument в структуру дерева
  * QDomDocument xmlDoc - документ с древовидной структурой
  * return корневой узел дерева
 */
-TreeNode convertDomDocumentToTreeNode(QDomDocument xmlDoc);
+TreeNode convertDomDocumentToTreeNode(const QDomDocument xmlDoc);
 
 #endif // FUNCTIONS_H
