@@ -9,35 +9,48 @@ class TreeNode
 {
     private:
         QString idNode;                                          // Id узла
-        uint numberNodesFromSet = 0;                             // Число узлов поддерева, которые принадлежат множеству
         QList<TreeNode*> children;                               // Список дочерних узлов
 
      public:
-         // Конструктор по умолчанию
+         //! Конструктор по умолчанию
          TreeNode();
 
-         // Конструктор узла по документу с древовидной структурой
+         //! Конструктор узла по документу с древовидной структурой
          TreeNode(QDomNode xmlNodeElement);
 
-         // Конструктор для тестирования
-         TreeNode(QString IdNode, QList<TreeNode*> Children, uint NumberNodesFromSet=0);
+         //! Конструктор для тестирования
+         TreeNode(QString IdNode, QList<TreeNode*> Children);
 
-         // Найти узел по его id
+         //! Найти узел по его id
+         /*!
+           \param[in] QString id - id узла
+           \return указатель на искомый узел
+        */
          TreeNode* findNodeById(const QString id);
 
-         // Проверить покрывает ли заданное множество текущий узел
+         //! Проверить покрывает ли заданное множество текущий узел
+         /*!
+            \param[in] QStringList& idsNodesFromSet - id узлов множества
+            \return краткий ответ покрывает ли заданное множество узлов данный узел
+         */
          bool checkCoverage(const QStringList& idsNodesFromSet);
 
-         // Получить список id недостающих узлов
-         uint getMissingNodes(const QString analizedNodeId,const QStringList& idsNodesFromSet, QStringList& MissingNodes);
+         //! Получить список id недостающих узлов для покрытия узла заданным множеством
+         /*!
+            \param[in] QString analizedNodeId - id анализируемого узла
+            \param[in] QStringList& idsNodesFromSet - id узлов множества
+            \param[out] QStringList& MissingNodes - ссылка на список недостающих узлов
+            \return число узлов принадлежащих множеству для данного поддерева
+         */
+         uint getMissingNodes(const QString& analizedNodeId,const QStringList& idsNodesFromSet, QStringList& MissingNodes);
 
-         // Получить id узла
+         //! Получить id узла
          const QString getIdNode();
 
-         // Получить указатели на дочерние узлы
+         //! Получить указатели на дочерние узлы
          const QList<TreeNode*> getChildren();
 
-         // Сравнение деревьев от корневого узла
+         //! Сравнение деревьев от корневого узла
          bool operator == (const TreeNode& right) const;
 };
 
